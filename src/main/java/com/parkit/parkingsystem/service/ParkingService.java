@@ -35,9 +35,9 @@ public class ParkingService {
 
                 int nbTickets = ticketDAO.getNbTicket(vehicleRegNumber);
                 if (nbTickets==0){
-                    System.out.println("binvenue");
+                    System.out.println("Bienvenue ! C’est votre première visite.");
                 }else{
-                    System.out.println("autre message");
+                    System.out.println("Heureux de vous revoir ! En tant qu’utilisateur régulier de notre parking, vous allez obtenir une remise de 5 %");
                 }
                 parkingSpot.setAvailable(false);
                 parkingSpotDAO.updateParking(parkingSpot);//allot this parking space and mark it's availability as false
