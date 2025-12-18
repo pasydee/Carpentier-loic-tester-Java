@@ -10,6 +10,7 @@ import org.apache.logging.log4j.Logger;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 
 public class ParkingSpotDAO {
     private static final Logger logger = LogManager.getLogger("ParkingSpotDAO");
@@ -56,4 +57,27 @@ public class ParkingSpotDAO {
         }
     }
 
+    public ParkingSpot getParkingSpot(int parkingNumber){
+        Connection con = null;
+        ResultSet rs = null;
+        try{
+            con = dataBaseConfig.getConnection();
+            PreparedStatement ps = con.prepareStatement(DBConstants.GET_PARKING_SPOT);
+            ps.setInt(1,parkingNumber);
+            rs = ps.executeQuery();
+
+            if (rs.next()) {
+                int number = rs.getInt("PARKING_NUMBER");
+                ParkingType type = ParkingType.valueOf(rs.getString("TYPE"));
+                boolean isAvailable = rs.getBoolean("AVAILABLE");
+
+                return new ParkingSpot(number, type, isAvailable);
+            }
+        }catch (Exception ex){
+            logger.error("Error updating parking info",ex);
+        }finally {
+            dataBaseConfig.closeConnection(con);
+        }
+        return null;
+    }
 }

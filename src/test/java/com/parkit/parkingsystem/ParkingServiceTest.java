@@ -59,7 +59,6 @@ public class ParkingServiceTest {
     @Test
     public void processExitingVehicleTest() throws Exception {
         Date inTime = new Date(System.currentTimeMillis() - (60*60*1000));
-        Date outTime = new Date(System.currentTimeMillis());
         ParkingSpot parkingSpot = new ParkingSpot(1,ParkingType.CAR,false);
 
         Ticket ticket = new Ticket();
